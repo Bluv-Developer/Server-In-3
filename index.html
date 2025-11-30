@@ -68,6 +68,29 @@
             line-height: 1.6;
         }
 
+        .coming-soon {
+            background: rgba(30, 33, 58, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(114, 137, 218, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .coming-soon h2 {
+            color: #7289da;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        .coming-soon p {
+            color: #b9bbbe;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
         .content {
             display: flex;
             flex-wrap: wrap;
@@ -110,46 +133,18 @@
             line-height: 1.6;
         }
 
-        .status {
-            background: rgba(30, 33, 58, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px auto;
-            max-width: 600px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(114, 137, 218, 0.2);
+        .coming-soon-banner {
+            background: rgba(114, 137, 218, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 2px dashed rgba(114, 137, 218, 0.5);
         }
 
-        .status h2 {
+        .coming-soon-banner h3 {
             color: #7289da;
-            margin-bottom: 20px;
             font-size: 1.8rem;
-        }
-
-        .status-list {
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .status-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .status-icon {
-            font-size: 20px;
-            margin-right: 15px;
-            width: 30px;
-            text-align: center;
-        }
-
-        .status-text {
-            flex: 1;
+            margin-bottom: 10px;
         }
 
         /* Animations */
@@ -157,6 +152,16 @@
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Background elements */
@@ -216,6 +221,10 @@
                 width: 100%;
                 max-width: 400px;
             }
+            
+            .coming-soon h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -232,6 +241,12 @@
         </div>
         <h1>Server In 3</h1>
         <p class="subtitle">A powerful Discord bot that sets up complete server templates with roles, channels, and permissions in under 3 minutes.</p>
+        
+        <!-- First "Website coming soon" section -->
+        <div class="coming-soon">
+            <h2>Website Coming Soon</h2>
+            <p>We're working hard to bring you an amazing website experience. Stay tuned for updates!</p>
+        </div>
         
         <div class="content">
             <div class="card">
@@ -259,30 +274,10 @@
             </div>
         </div>
         
-        <div class="status">
-            <h2>Bot Features</h2>
-            <div class="status-list">
-                <div class="status-item">
-                    <div class="status-icon">✅</div>
-                    <div class="status-text">Automatic server backup before setup</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon">✅</div>
-                    <div class="status-text">Complete role hierarchy with permissions</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon">✅</div>
-                    <div class="status-text">Organized channel categories</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon">✅</div>
-                    <div class="status-text">Live support system</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-icon">✅</div>
-                    <div class="status-text">Admin control panels</div>
-                </div>
-            </div>
+        <!-- Second "Website coming soon" section -->
+        <div class="coming-soon-banner pulse">
+            <h3>Website Coming Soon</h3>
+            <p>Our full website with documentation and features will be available shortly.</p>
         </div>
     </div>
 </body>
