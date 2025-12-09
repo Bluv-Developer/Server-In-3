@@ -1,284 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server In 3 - Discord Bot</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #7289da 0%, #5b6eae 100%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 10px 25px rgba(114, 137, 218, 0.3);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .logo i {
-            font-size: 50px;
-            color: white;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #7289da, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(114, 137, 218, 0.2);
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            color: #b9bbbe;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
-        .coming-soon {
-            background: rgba(30, 33, 58, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px auto;
-            max-width: 600px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(114, 137, 218, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .coming-soon h2 {
-            color: #7289da;
-            margin-bottom: 20px;
-            font-size: 2.2rem;
-        }
-
-        .coming-soon p {
-            color: #b9bbbe;
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            width: 100%;
-        }
-
-        .card {
-            background: rgba(30, 33, 58, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            width: 300px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(114, 137, 218, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-icon {
-            font-size: 40px;
-            color: #7289da;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .card p {
-            color: #b9bbbe;
-            line-height: 1.6;
-        }
-
-        .coming-soon-banner {
-            background: rgba(114, 137, 218, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            border: 2px dashed rgba(114, 137, 218, 0.5);
-        }
-
-        .coming-soon-banner h3 {
-            color: #7289da;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Background elements */
-        .bg-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .bg-element {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(114, 137, 218, 0.1);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .bg-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            left: -150px;
-            animation-delay: 0s;
-        }
-
-        .bg-element:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -100px;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .bg-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 20%;
-            right: -75px;
-            animation-delay: 4s;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=3.0" name="viewport">
+        <!-- section:seometa -->
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Discord">
+        <meta property="og:title" content="Discord - Group Chat That’s All Fun &amp; Games">
+        <meta property="og:description" content="Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.">
+        <meta property="og:image" content="https://cdn.discordapp.com/assets/og_img_discord_home.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@discord">
+        <meta name="twitter:creator" content="@discord">
+        <!-- endsection -->
+        <script nonce="MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==">
+            window.GLOBAL_ENV = {
+                "NODE_ENV": "production",
+                "BUILT_AT": "1765181915614",
+                "HTML_TIMESTAMP": Date.now(),
+                "BUILD_NUMBER": "476797",
+                "PROJECT_ENV": "production",
+                "RELEASE_CHANNEL": "stable",
+                "VERSION_HASH": "dc55b69d98dea52c6cf75866a03836121303f658",
+                "PRIMARY_DOMAIN": "discord.com",
+                "SENTRY_TAGS": {
+                    "buildId": "dc55b69d98dea52c6cf75866a03836121303f658",
+                    "buildType": "normal"
+                },
+                "SENTRY_RELEASE": "2025-12-08-dc55b69d98dea52c6cf75866a03836121303f658-discord_web",
+                "PUBLIC_PATH": "/assets/",
+                "LOCATION": "history",
+                "API_VERSION": 9,
+                "API_PROTOCOL": "https:",
+                "API_ENDPOINT": "//discord.com/api",
+                "GATEWAY_ENDPOINT": "wss://gateway.discord.gg",
+                "STATIC_ENDPOINT": "",
+                "ASSET_ENDPOINT": "//discord.com",
+                "MEDIA_PROXY_ENDPOINT": "//media.discordapp.net",
+                "IMAGE_PROXY_ENDPOINTS": "//images-ext-1.discordapp.net,//images-ext-2.discordapp.net",
+                "CDN_HOST": "cdn.discordapp.com",
+                "DEVELOPERS_ENDPOINT": "//discord.com",
+                "MARKETING_ENDPOINT": "//discord.com",
+                "WEBAPP_ENDPOINT": "//discord.com",
+                "WIDGET_ENDPOINT": "//discord.com/widget",
+                "SEO_ENDPOINT": "undefined",
+                "ADS_MANAGER_ENDPOINT": "//ads.discord.com",
+                "NETWORKING_ENDPOINT": "//router.discordapp.net",
+                "REMOTE_AUTH_ENDPOINT": "wss://remote-auth-gateway.discord.gg",
+                "RTC_LATENCY_ENDPOINT": "//latency.discord.media/rtc",
+                "INVITE_HOST": "discord.gg",
+                "GUILD_TEMPLATE_HOST": "discord.new",
+                "GIFT_CODE_HOST": "discord.gift",
+                "ACTIVITY_APPLICATION_HOST": "discordsays.com",
+                "MIGRATION_SOURCE_ORIGIN": "https://discordapp.com",
+                "MIGRATION_DESTINATION_ORIGIN": "https://discord.com",
+                "STRIPE_KEY": "pk_live_CUQtlpQUF0vufWpnpUmQvcdi",
+                "ADYEN_KEY": "live_E3OQ33V6GVGTXOVQZEAFQJ6DJIDVG6SY",
+                "BRAINTREE_KEY": "production_ktzp8hfp_49pp2rp4phym7387",
+                "SPRIG_API_KEY": "ZaQ2JuStvc",
+                "MUX_ENV_KEY": "undefined",
+                "DEV_SESSION_KEY": "undefined"
             }
-            
-            .content {
-                flex-direction: column;
-                align-items: center;
+        </script>
+        <script nonce="MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==">
+            !function() {
+                if (null != window.WebSocket && function(n) {
+                    try {
+                        var o = localStorage.getItem(n);
+                        if (null == o)
+                            return null;
+                        return JSON.parse(o)
+                    } catch (e) {
+                        return null
+                    }
+                }("token") && !window.__OVERLAY__) {
+                    var n = null != window.DiscordNative || null != window.require ? "etf" : "json"
+                      , o = window.GLOBAL_ENV.GATEWAY_ENDPOINT + "/?encoding=" + n + "&v=" + window.GLOBAL_ENV.API_VERSION;
+                    null != window.DiscordNative && void 0 !== window.Uint8Array && void 0 !== window.TextDecoder ? o += "&compress=zstd-stream" : void 0 !== window.Uint8Array && (o += "&compress=zlib-stream"),
+                    console.log("[FAST CONNECT] " + o + ", encoding: " + n + ", version: " + window.GLOBAL_ENV.API_VERSION);
+                    var e = new WebSocket(o);
+                    e.binaryType = "arraybuffer";
+                    var i = Date.now()
+                      , r = {
+                        open: !1,
+                        identify: !1,
+                        gateway: o,
+                        messages: []
+                    };
+                    e.onopen = function() {
+                        console.log("[FAST CONNECT] connected in " + (Date.now() - i) + "ms"),
+                        r.open = !0
+                    }
+                    ,
+                    e.onclose = e.onerror = function() {
+                        window._ws = null
+                    }
+                    ,
+                    e.onmessage = function(n) {
+                        r.messages.push(n)
+                    }
+                    ,
+                    window._ws = {
+                        ws: e,
+                        state: r
+                    }
+                }
+            }();
+        </script>
+        <!-- section:title -->
+        <title>Discord</title>
+        <!-- endsection -->
+        <script nonce="MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==">
+            window.__OVERLAY__ = /overlay/.test(location.pathname);
+            window.__BILLING_STANDALONE__ = /^\/billing/.test(location.pathname);
+        </script>
+        <link rel="preload" as="script" href="/assets/libdiscoreWasmFetch.66f649fba32cc0b0.js">
+        <link rel="preload" as="script" href="/assets/sentry.1a227dab9246a3f9.js">
+        <link rel="preload" as="script" href="/assets/web.5f2d0a79370d1016.js">
+        <link href="/assets/favicon.ico" rel="icon">
+        <link href="/assets/12633.61e599ff38e959a2.css" rel="stylesheet">
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="app-mount"></div>
+        <script defer src="/assets/libdiscoreWasmFetch.66f649fba32cc0b0.js"></script>
+        <script defer src="/assets/sentry.1a227dab9246a3f9.js"></script>
+        <script defer src="/assets/web.5f2d0a79370d1016.js"></script>
+        <script nonce="MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==">
+            (function() {
+                function c() {
+                    var b = a.contentDocument || a.contentWindow.document;
+                    if (b) {
+                        var d = b.createElement('script');
+                        d.nonce = 'MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==';
+                        d.innerHTML = "window.__CF$cv$params={r:'9ab1d4d8ef51e663',t:'MTc2NTI1NTI5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='MTA2LDEyMywxOTcsMTI1LDc5LDIyMCw4Miw3Mg==';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+                        b.getElementsByTagName('head')[0].appendChild(d)
+                    }
+                }
+                if (document.body) {
+                    var a = document.createElement('iframe');
+                    a.height = 1;
+                    a.width = 1;
+                    a.style.position = 'absolute';
+                    a.style.top = 0;
+                    a.style.left = 0;
+                    a.style.border = 'none';
+                    a.style.visibility = 'hidden';
+                    document.body.appendChild(a);
+                    if ('loading' !== document.readyState)
+                        c();
+                    else if (window.addEventListener)
+                        document.addEventListener('DOMContentLoaded', c);
+                    else {
+                        var e = document.onreadystatechange || function() {}
+                        ;
+                        document.onreadystatechange = function(b) {
+                            e(b);
+                            'loading' !== document.readyState && (document.onreadystatechange = e,
+                            c())
+                        }
+                    }
+                }
             }
-            
-            .card {
-                width: 100%;
-                max-width: 400px;
-            }
-            
-            .coming-soon h2 {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="bg-elements">
-        <div class="bg-element"></div>
-        <div class="bg-element"></div>
-        <div class="bg-element"></div>
-    </div>
-    
-    <div class="container">
-        <div class="logo">
-            <i class="fas fa-robot"></i>
-        </div>
-        <h1>Server In 3</h1>
-        <p class="subtitle">A powerful Discord bot that sets up complete server templates with roles, channels, and permissions in under 3 minutes.</p>
-        
-        <!-- First "Website coming soon" section -->
-        <div class="coming-soon">
-            <h2>Website Coming Soon</h2>
-            <p>We're working hard to bring you an amazing website experience. Stay tuned for updates!</p>
-        </div>
-        
-        <div class="content">
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3>Fast Setup</h3>
-                <p>Complete server configuration with 25+ roles and 35+ channels in less than 3 minutes.</p>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>Professional Templates</h3>
-                <p>Choose from Emergency Response, Gaming Community, or Business Team templates.</p>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-undo"></i>
-                </div>
-                <h3>Easy Restoration</h3>
-                <p>Automatic backups let you restore your original server anytime with one click.</p>
-            </div>
-        </div>
-        
-        <!-- Second "Website coming soon" section -->
-        <div class="coming-soon-banner pulse">
-            <h3>Website Coming Soon</h3>
-            <p>Our full website with documentation and features will be available shortly.</p>
-        </div>
-    </div>
-</body>
+            )();
+        </script>
+    </body>
 </html>
